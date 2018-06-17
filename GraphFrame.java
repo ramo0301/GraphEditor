@@ -51,6 +51,8 @@ public class GraphFrame extends JFrame {
 		addVertexItem.setAction(addVertex);
 		addEdgeItem.setAction(addEdge);
 		
+		SelectionController mouse = new SelectionController(thePanel);
+		
 		thePanel.setBackground(Color.LIGHT_GRAY);
 		add(new EmptyPanel(), BorderLayout.NORTH);
 		add(new EmptyPanel(), BorderLayout.SOUTH);

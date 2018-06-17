@@ -1,6 +1,6 @@
 package pack;
 
-//edit 8
+//edit 9
 
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -50,6 +50,8 @@ public class GraphFrame extends JFrame {
 		Action addEdge = new AddEdgeAction("add edge", 0, 1);
 		addVertexItem.setAction(addVertex);
 		addEdgeItem.setAction(addEdge);
+		
+		SelectionController mouse = new SelectionController(thePanel);
 		
 		thePanel.setBackground(Color.LIGHT_GRAY);
 		add(new EmptyPanel(), BorderLayout.NORTH);
@@ -113,6 +115,78 @@ private class AddEdgeAction extends AbstractAction {
 			yDifference = y1-y2;
 			System.out.println("xDifference: " + xDifference);
 			System.out.println("yDifference: " + yDifference);
+			
+			double horizontalRatio = (Math.sqrt(3)/2) / .5;
+			double verticalRatio = .5 / (Math.sqrt(3)/2);
+			double actualRatio = xDifference/yDifference;
+			System.out.println("HorizontalRatio: " + horizontalRatio);
+			System.out.println("VerticalRatio: " + verticalRatio);
+			System.out.println((int)Math.round(xDifference*1/yDifference));
+			
+			int xFirst=0, yFirst=0, xSecond=0, ySecond=0;
+			
+			if(Math.abs(actualRatio)>=horizontalRatio){
+				
+				yFirst = (int)( thePanel.getRectangle(vertex1).getY() + thePanel.getRectangle(vertex1).getHeight()/2 );
+				ySecond = (int)( thePanel.getRectangle(vertex2).getY() + thePanel.getRectangle(vertex2).getHeight()/2 );
+				if(xDifference>0){
+					System.out.println("Left horizontal case");
+					xFirst = (int)thePanel.getRectangle(vertex1).getX();
+					xSecond = (int)( thePanel.getRectangle(vertex2).getX() + thePanel.getRectangle(vertex2).getWidth() );;
+				} else {
+					System.out.println("Right horizontal case");
+					xFirst = (int)( thePanel.getRectangle(vertex1).getX() + thePanel.getRectangle(vertex1).getWidth() );
+					xSecond = (int)thePanel.getRectangle(vertex2).getX();
+				}
+			} else if(Math.abs(actualRatio)<=verticalRatio){
+				xFirst = (int)( thePanel.getRectangle(vertex1).getX() + thePanel.getRectangle(vertex1).getWidth()/2) ;
+				xSecond = (int)( thePanel.getRectangle(vertex2).getX() + thePanel.getRectangle(vertex2).getWidth()/2) ;
+				if(yDifference>0){
+					System.out.println("Upper vertical case");
+					yFirst = (int)( thePanel.getRectangle(vertex1).getY() );
+					ySecond = (int)( thePanel.getRectangle(vertex2).getY() + thePanel.getRectangle(vertex2).getHeight() );
+				} else {
+					System.out.println("Lower vertical case");
+					yFirst = (int)( thePanel.getRectangle(vertex1).getY() + thePanel.getRectangle(vertex1).getHeight() );
+					ySecond= (int)( thePanel.getRectangle(vertex2).getY() );
+				}
+			} else {
+				
+				//THIS PART CAN BE DONE MORE EFFICIENTLY
+				
+				if(xDifference>0){
+					
+					yFirst = (int)( thePanel.getRectangle(vertex1).getY() + thePanel.getRectangle(vertex1).getHeight() );
+					ySecond = (int)thePanel.getRectangle(vertex2).getY();
+					if(yDifference>0){
+						System.out.println("Lower right case");
+						xFirst = (int)( thePanel.getRectangle(vertex1).getX() + thePanel.getRectangle(vertex1).getWidth()*2/3 );
+					} else {
+						System.out.println("Lower left case");
+						xFirst = (int)( thePanel.getRectangle(vertex1).getX() + thePanel.getRectangle(vertex1).getWidth()/3 );
+						xSecond = (int)( thePanel.getRectangle(vertex2).getX() + thePanel.getRectangle(vertex2).getWidth()*2/3 );
+					}
+				} else {
+					
+					yFirst = (int)thePanel.getRectangle(vertex1).getY();
+					ySecond = (int)( thePanel.getRectangle(vertex2).getY() + thePanel.getRectangle(vertex2).getHeight() );
+					if(yDifference>0){
+						System.out.println("Upper right case");
+						xFirst = (int)( thePanel.getRectangle(vertex1).getX() + thePanel.getRectangle(vertex1).getWidth()*2/3 );
+						xSecond = (int)( thePanel.getRectangle(vertex2).getX() + thePanel.getRectangle(vertex2).getWidth()/3 );
+					} else {
+						System.out.println("Upper left case");
+						xFirst = (int)( thePanel.getRectangle(vertex1).getX() + thePanel.getRectangle(vertex1).getWidth()/3 );
+						xSecond= (int)( thePanel.getRectangle(vertex2).getX() + thePanel.getRectangle(vertex2).getWidth()*2/3 );
+					}
+				}
+			}
+			
+			thePanel.addLineCoordinates(xFirst, yFirst, xSecond, ySecond);
+			thePanel.repaint();
+			
+			
+			
 			
 			//theModel.addVertex("Vertex " + numberOfVertices, xCoordinate, yCoordinate);
 			//thePanel.addRectangle(theModel.getVertexList().get(numberOfVertices).getRectangle());

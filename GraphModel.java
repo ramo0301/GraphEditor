@@ -3,7 +3,7 @@ package pack;
 import java.util.ArrayList;
 
 public class GraphModel {
-	private ArrayList<GraphEdge> edgeList = new ArrayList<GraphEdge>();
+	//private ArrayList<GraphEdge> edgeList = new ArrayList<GraphEdge>();
 	private ArrayList<GraphVertex> vertexList = new ArrayList<GraphVertex>();
 	
 	public ArrayList<GraphVertex> getVertexList() {

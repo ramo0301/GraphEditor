@@ -1,5 +1,7 @@
 package pack;
 
+import java.awt.Rectangle;
+
 public class GraphVertex {
 	private String name = "defaultName";
 	private int xCoordinate = 0;
@@ -24,6 +26,11 @@ public class GraphVertex {
 		} else {
 			System.out.println("ERROR: IMPOSSIBLE COORDINATES");
 		}
+	}
+	
+	public Rectangle getRectangle(){
+		Rectangle rectangle = new Rectangle(xCoordinate, yCoordinate, 100, 50);
+		return rectangle;
 	}
 	
 	public int getXCoordinate(){

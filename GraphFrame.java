@@ -3,13 +3,16 @@ package pack;
 //edit 5
 
 import java.awt.event.ActionEvent;
-import java.util.List;
+import java.util.ArrayList;
+//import java.util.List;
 import java.util.Scanner;
 //import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
 import javax.swing.Action;
 import java.awt.Graphics;
 import java.awt.Color;
+import java.awt.Rectangle;
+
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -20,9 +23,10 @@ public class GraphFrame extends JFrame {
 	public static final int WINDOW_WIDTH = 1000;
 	public static final int WINDOW_HEIGHT = 600;
 	
-	private boolean actionValue = false;
+	//private boolean actionValue = false;
 	private int numberOfVertices = 0;
 	private GraphModel theModel = new GraphModel();
+	private ArrayList<Rectangle> rectangleList = new ArrayList<Rectangle>();
 	
 	Scanner keyboard = new Scanner(System.in);
 	
@@ -61,16 +65,18 @@ public class GraphFrame extends JFrame {
 		
 		public void actionPerformed(ActionEvent e) {
 			setActionValue(true);				//probably doesn't even need to use the method
-			numberOfVertices++;
+			
 			//System.out.println("Enter coordinates x and y");
 			int xCoordinate = numberOfVertices*100;
 			int yCoordinate = numberOfVertices*100;
 			
 			theModel.addVertex("Vertex " + numberOfVertices, xCoordinate, yCoordinate);
-			//List vertices = theModel.getVertexList() ;
+			rectangleList.add(theModel.getVertexList().get(numberOfVertices).getRectangle());
 			
 			System.out.println("Hereby setting action value to true");
 			repaint();
+			
+			numberOfVertices++;
 		}
 	}
 	
@@ -86,13 +92,13 @@ public class GraphFrame extends JFrame {
 	*/
 	
 	public void setActionValue(boolean value){
-		actionValue = value;
+		//actionValue = value;
 	}
 	
 	public void paint(Graphics g){
 		super.paint(g);
-		for(GraphVertex vertex : theModel.getVertexList()){
-			g.drawRect(vertex.getXCoordinate(), vertex.getYCoordinate(), 100, 50);
+		for(Rectangle rectangle : rectangleList){
+			//g.drawRect((int)rectangle.getX(), (int)rectangle.getY(), (int)rectangle.getWidth(), (int)rectangle.getHeight());
 		}
 		//if(actionValue)
 		//	g.drawRect(100, 100, 100, 50);

@@ -1,6 +1,6 @@
 package pack;
 
-//edit 8
+//edit 9
 
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -38,14 +38,18 @@ public class GraphFrame extends JFrame {
 				
 		JMenu theMenu = new JMenu("Menu");
 		JMenuItem addVertexItem = new JMenuItem("add vertex");
+		JMenuItem addEdgeItem = new JMenuItem("add edge");
 		JMenuBar theBar = new JMenuBar();
 		
 		theMenu.add(addVertexItem);
+		theMenu.add(addEdgeItem);
 		theBar.add(theMenu);
 		setJMenuBar(theBar);
 		
 		Action addVertex = new AddVertexAction("add vertex");
+		Action addEdge = new AddEdgeAction("add edge", 0, 1);
 		addVertexItem.setAction(addVertex);
+		addEdgeItem.setAction(addEdge);
 		
 		thePanel.setBackground(Color.LIGHT_GRAY);
 		add(new EmptyPanel(), BorderLayout.NORTH);
@@ -62,9 +66,7 @@ public class GraphFrame extends JFrame {
 			super(addVertex);
 		}
 		
-		public void actionPerformed(ActionEvent e) {
-			setActionValue(true);				//probably doesn't even need to use the method
-			
+		public void actionPerformed(ActionEvent e) {			
 			int xCoordinate=0, yCoordinate=0;
 			System.out.println(numberOfVertices);
 			switch(numberOfVertices){
@@ -88,6 +90,72 @@ public class GraphFrame extends JFrame {
 			thePanel.repaint();
 			
 			numberOfVertices++;
+		}
+	}
+	
+private class AddEdgeAction extends AbstractAction {
+		int vertex1 = 0, vertex2 = 0;
+	
+		public AddEdgeAction(String inputEdge, int vertex1, int vertex2){
+			super(inputEdge);
+			this.vertex1 = vertex1;
+			this.vertex2 = vertex2;
+		}
+		
+		public void actionPerformed(ActionEvent e) {			
+			int x1, y1, x2, y2;
+			double xDifference, yDifference;
+			x1 = (int)thePanel.getRectangle(vertex1).getX();
+			y1 = (int)thePanel.getRectangle(vertex1).getY();
+			x2 = (int)thePanel.getRectangle(vertex2).getX();
+			y2 = (int)thePanel.getRectangle(vertex2).getY();
+			xDifference = x1-x2;
+			yDifference = y1-y2;
+			System.out.println("xDifference: " + xDifference);
+			System.out.println("yDifference: " + yDifference);
+			
+			double horizontalRatio = (Math.sqrt(3)/2) / .5;
+			double verticalRatio = .5 / (Math.sqrt(3)/2);
+			double actualRatio = xDifference/yDifference;
+			System.out.println("HorizontalRatio: " + horizontalRatio);
+			System.out.println("VerticalRatio: " + verticalRatio);
+			System.out.println((int)Math.round(xDifference*1/yDifference));
+			
+			if(Math.abs(actualRatio)>=horizontalRatio){
+				
+				if(xDifference>0)
+					System.out.println("Left horizontal case");
+				else
+					System.out.println("Right horizontal case");
+			} else if(Math.abs(actualRatio)<=verticalRatio){
+				
+				if(yDifference>0)
+					System.out.println("Upper vertical case");
+				else
+					System.out.println("Lower vertical case");
+			} else {
+				
+				if(xDifference>0){
+					if(yDifference>0)
+						System.out.println("Lower right case");
+					else
+						System.out.println("Lower left case");
+				} else {
+					if(yDifference>0)
+						System.out.println("Upper right case");
+					else
+						System.out.println("Upper left case");
+				}
+			}
+			
+			
+			
+			//theModel.addVertex("Vertex " + numberOfVertices, xCoordinate, yCoordinate);
+			//thePanel.addRectangle(theModel.getVertexList().get(numberOfVertices).getRectangle());
+			
+			//thePanel.repaint();
+			
+			//numberOfVertices++;
 		}
 	}
 	

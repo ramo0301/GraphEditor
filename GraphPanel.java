@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class GraphPanel extends JPanel {
 	private ArrayList<Rectangle> listOfRectangles = new ArrayList<Rectangle>();
 	private ArrayList<Integer> lineCoordinates = new ArrayList<Integer>();
+	private int selectedVertex = -1;
 	
 	public GraphPanel(){
 		super();
@@ -37,6 +38,12 @@ public class GraphPanel extends JPanel {
 		return listOfRectangles;
 	}
 	
+	public void selectVertex(int index){
+		selectedVertex = index;
+		repaint();
+		System.out.println("Selected vertex " + selectedVertex);
+	}
+	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
@@ -44,14 +51,21 @@ public class GraphPanel extends JPanel {
 	    
 		System.out.println("repainting");
 
+		int i = 0;
 		for(Rectangle rec : listOfRectangles){	
-			g.setColor(Color.WHITE);
-			g.fillRect((int)rec.getX()+1, (int)rec.getY()+1, (int)rec.getWidth()-1, (int)rec.getHeight()-1);	
+			if(i == selectedVertex){
+				g.setColor(Color.RED);
+				g.fillRect((int)rec.getX()+1, (int)rec.getY()+1, (int)rec.getWidth()-1, (int)rec.getHeight()-1);	
+			} else {
+				g.setColor(Color.WHITE);
+				g.fillRect((int)rec.getX()+1, (int)rec.getY()+1, (int)rec.getWidth()-1, (int)rec.getHeight()-1);
+			}
 			g.setColor(Color.BLACK);
 			g.drawRect((int)rec.getX(), (int)rec.getY(), (int)rec.getWidth(), (int)rec.getHeight());
+			i++;
 		}
-		for(int i=0 ; i<lineCoordinates.size(); i+=4){
-			g.drawLine(lineCoordinates.get(i),lineCoordinates.get(i+1),lineCoordinates.get(i+2),lineCoordinates.get(i+3));
+		for(int j=0 ; i<lineCoordinates.size(); j+=4){
+			g.drawLine(lineCoordinates.get(j),lineCoordinates.get(j+1),lineCoordinates.get(j+2),lineCoordinates.get(j+3));
 		}
 	}
 	

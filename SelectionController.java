@@ -23,10 +23,14 @@ public class SelectionController implements MouseListener{
 	public void mousePressed(MouseEvent e) {
 		System.out.println("You just pressed the panel at " + e.getX() + "," + e.getY() );
 		importRectangles(thePanel.getRectangleList() );
+		int i = 0;
 		for (Rectangle rec : listOfRectangles){
 			if(rec.contains(e.getPoint() )){
-				System.out.println("You just pressed a vertex");
+				System.out.println("You just pressed vertex " + i);
+				thePanel.selectVertex(i);
+				break;
 			}
+			i++;
 		}
 		
 	}

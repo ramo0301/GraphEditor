@@ -1,8 +1,9 @@
 package pack;
 
-//edit 4
+//edit 5
 
 import java.awt.event.ActionEvent;
+import java.util.List;
 import java.util.Scanner;
 //import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
@@ -61,11 +62,12 @@ public class GraphFrame extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			setActionValue(true);				//probably doesn't even need to use the method
 			numberOfVertices++;
-			System.out.println("Enter coordinates x and y");
-			int xCoordinate = keyboard.nextInt();
-			int yCoordinate = keyboard.nextInt();
+			//System.out.println("Enter coordinates x and y");
+			int xCoordinate = numberOfVertices*100;
+			int yCoordinate = numberOfVertices*100;
 			
 			theModel.addVertex("Vertex " + numberOfVertices, xCoordinate, yCoordinate);
+			//List vertices = theModel.getVertexList() ;
 			
 			System.out.println("Hereby setting action value to true");
 			repaint();
@@ -89,7 +91,10 @@ public class GraphFrame extends JFrame {
 	
 	public void paint(Graphics g){
 		super.paint(g);
-		if(actionValue)
-			g.drawRect(100, 100, 100, 50);
+		for(GraphVertex vertex : theModel.getVertexList()){
+			g.drawRect(vertex.getXCoordinate(), vertex.getYCoordinate(), 100, 50);
+		}
+		//if(actionValue)
+		//	g.drawRect(100, 100, 100, 50);
 	}
 }

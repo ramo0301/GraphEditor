@@ -1,9 +1,10 @@
 package pack;
 
-//edit 3
+//edit 4
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.Scanner;
+//import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
 import javax.swing.Action;
 import java.awt.Graphics;
@@ -18,25 +19,28 @@ public class GraphFrame extends JFrame {
 	public static final int WINDOW_WIDTH = 1000;
 	public static final int WINDOW_HEIGHT = 600;
 	
-	public boolean actionValue = false;
+	private boolean actionValue = false;
+	private int numberOfVertices = 0;
+	private GraphModel theModel = new GraphModel();
+	
+	Scanner keyboard = new Scanner(System.in);
 	
 	public GraphFrame(){
 		super("Graph Frame");
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout() );
-		
+				
 		JMenu theMenu = new JMenu("Menu");
-		JMenuItem addVertixItem = new JMenuItem("add vertice");
+		JMenuItem addVertexItem = new JMenuItem("add vertex");
 		JMenuBar theBar = new JMenuBar();
 		
-		theMenu.add(addVertixItem);
+		theMenu.add(addVertexItem);
 		theBar.add(theMenu);
 		setJMenuBar(theBar);
-		//addVertixItem.addActionListener(new AddVertixAction2() );
 		
-		Action addVertix = new AddVertixAction("add vertex");
-		addVertixItem.setAction(addVertix);
+		Action addVertex = new AddVertexAction("add vertex");
+		addVertexItem.setAction(addVertex);
 		
 		GraphPanel center = new GraphPanel();
 		center.setBackground(Color.green);
@@ -48,18 +52,27 @@ public class GraphFrame extends JFrame {
 		
 	}
 	
-	private class AddVertixAction extends AbstractAction {
+	private class AddVertexAction extends AbstractAction {
 		
-		public AddVertixAction(String addVertix){
-			super(addVertix);
+		public AddVertexAction(String addVertex){
+			super(addVertex);
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-			setActionValue(true);
+			setActionValue(true);				//probably doesn't even need to use the method
+			numberOfVertices++;
+			System.out.println("Enter coordinates x and y");
+			int xCoordinate = keyboard.nextInt();
+			int yCoordinate = keyboard.nextInt();
+			
+			theModel.addVertex("Vertex " + numberOfVertices, xCoordinate, yCoordinate);
+			
 			System.out.println("Hereby setting action value to true");
 			repaint();
 		}
 	}
+	
+	
 	/*
 	private class AddVertixAction2 implements ActionListener{
 		public void actionPerformed(ActionEvent e){

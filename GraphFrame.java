@@ -1,6 +1,6 @@
 package pack;
 
-//edit 5
+//edit 8
 
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -26,7 +26,6 @@ public class GraphFrame extends JFrame {
 	//private boolean actionValue = false;
 	private int numberOfVertices = 0;
 	private GraphModel theModel = new GraphModel();
-	private ArrayList<Rectangle> rectangleList = new ArrayList<Rectangle>();
 	private GraphPanel thePanel = new GraphPanel();
 	
 	Scanner keyboard = new Scanner(System.in);
@@ -48,7 +47,7 @@ public class GraphFrame extends JFrame {
 		Action addVertex = new AddVertexAction("add vertex");
 		addVertexItem.setAction(addVertex);
 		
-		thePanel.setBackground(Color.green);
+		thePanel.setBackground(Color.LIGHT_GRAY);
 		add(new EmptyPanel(), BorderLayout.NORTH);
 		add(new EmptyPanel(), BorderLayout.SOUTH);
 		add(new EmptyPanel(), BorderLayout.EAST);
@@ -66,11 +65,22 @@ public class GraphFrame extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			setActionValue(true);				//probably doesn't even need to use the method
 			
-			//System.out.println("Enter coordinates x and y");
+			int xCoordinate=0, yCoordinate=0;
+			System.out.println(numberOfVertices);
 			switch(numberOfVertices){
+			case 0:
+				xCoordinate = 350;
+				yCoordinate = 100;
+				break;
+			case 1:
+				xCoordinate = 50;
+				yCoordinate = 400;
+				break;
+			case 2:
+				xCoordinate = 650;
+				yCoordinate = 400;
+				//}
 			}
-			int xCoordinate = numberOfVertices*100;
-			int yCoordinate = numberOfVertices*100;
 			
 			theModel.addVertex("Vertex " + numberOfVertices, xCoordinate, yCoordinate);
 			thePanel.addRectangle(theModel.getVertexList().get(numberOfVertices).getRectangle());

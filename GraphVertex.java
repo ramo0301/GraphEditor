@@ -29,7 +29,7 @@ public class GraphVertex {
 	}
 	
 	public Rectangle getRectangle(){
-		Rectangle rectangle = new Rectangle(xCoordinate, yCoordinate, 100, 50);
+		Rectangle rectangle = new Rectangle(xCoordinate, yCoordinate, 200, 100);
 		return rectangle;
 	}
 	

@@ -3,6 +3,8 @@ package pack;
 //edit 9
 
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 //import java.util.List;
 import java.util.Scanner;
@@ -28,7 +30,10 @@ public class GraphFrame extends JFrame {
 	private GraphModel theModel = new GraphModel();
 	private GraphPanel thePanel = new GraphPanel();
 	
+	private GraphVertex selectedVertex1 = null, selectedVertex2 = null;
+	
 	Scanner keyboard = new Scanner(System.in);
+	SelectionController mouse = new SelectionController(thePanel);
 	
 	public GraphFrame(){
 		super("Graph Frame");
@@ -50,8 +55,6 @@ public class GraphFrame extends JFrame {
 		Action addEdge = new AddEdgeAction("add edge", 0, 1);
 		addVertexItem.setAction(addVertex);
 		addEdgeItem.setAction(addEdge);
-		
-		SelectionController mouse = new SelectionController(thePanel);
 		
 		thePanel.setBackground(Color.LIGHT_GRAY);
 		add(new EmptyPanel(), BorderLayout.NORTH);
@@ -95,18 +98,68 @@ public class GraphFrame extends JFrame {
 		}
 	}
 	
-private class AddEdgeAction extends AbstractAction {
+	private class EdgeAddingMouse implements MouseListener{
+		public EdgeAddingMouse(){
+			thePanel.addMouseListener(this);
+		}
+		
+		public void mousePressed(MouseEvent e) {
+			System.out.println("You just pressed the panel at " + e.getX() + "," + e.getY() );
+			int i = 0;
+			for (Rectangle rec : thePanel.getRectangleList()){
+				if(rec.contains(e.getPoint() )){
+					System.out.println("You just pressed vertex " + i);
+					thePanel.selectVertex(i);
+					if(selectedVertex1 != null){
+						selectedVertex1 = theModel.getVertex(i);
+						break;
+					} else if(selectedVertex2 != null){
+						selectedVertex2 = theModel.getVertex(i);
+						break;
+					} else {
+						removeMouseListener(this);
+					}
+				}
+				i++;
+			}
+			
+		}
+		
+		public void mouseReleased(MouseEvent e) {
+			System.out.println("You just released the panel at " + e.getX() + "," + e.getY() );
+
+		}
+		
+		public void mouseEntered(MouseEvent e) {
+			System.out.println("You just entered the panel at " + e.getX() + "," + e.getY() );
+
+		}
+
+		public void mouseExited(MouseEvent e) {
+			System.out.println("You just exited the panel at " + e.getX() + "," + e.getY() );
+
+		}
+
+		public void mouseClicked(MouseEvent e) {
+			System.out.println("You just clicked the panel at " + e.getX() + "," + e.getY() );
+
+		}
+	}
+	
+	private class AddEdgeAction extends AbstractAction {
 		int vertex1 = 0, vertex2 = 0;
 	
-		public AddEdgeAction(String inputEdge, int vertex1, int vertex2){
+		public AddEdgeAction(String inputEdge){
 			super(inputEdge);
-			this.vertex1 = vertex1;
-			this.vertex2 = vertex2;
-		}
+			
+			EdgeAddingMouse edgeMouse = new EdgeAddingMouse();
 		
 		public void actionPerformed(ActionEvent e) {			
 			int x1, y1, x2, y2;
 			double xDifference, yDifference;
+			vertex1 = selectedVertex1;
+			vertex2 = selectedVertex2;
+			
 			x1 = (int)thePanel.getRectangle(vertex1).getX();
 			y1 = (int)thePanel.getRectangle(vertex1).getY();
 			x2 = (int)thePanel.getRectangle(vertex2).getX();

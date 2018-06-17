@@ -13,6 +13,10 @@ public class GraphModel {
 	public void setVertexList(ArrayList<GraphVertex> vertexList) {
 		this.vertexList = vertexList;
 	}
+	
+	public GraphVertex getVertex(int index){
+		return vertexList.get(index);
+	}
 
 	public void addVertex(String name, int xInput, int yInput){
 		vertexList.add(new GraphVertex(name, xInput, yInput) );

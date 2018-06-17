@@ -83,7 +83,7 @@ public class GraphFrame extends JFrame {
 			case 2:
 				xCoordinate = 650;
 				yCoordinate = 400;
-				//}
+				break;
 			}
 			
 			theModel.addVertex("Vertex " + numberOfVertices, xCoordinate, yCoordinate);

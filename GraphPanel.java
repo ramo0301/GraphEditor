@@ -18,6 +18,10 @@ public class GraphPanel extends JPanel {
 		listOfRectangles.add(inputRectangle);
 	}
 	
+	public Rectangle getRectangle(int number){
+		return listOfRectangles.get(number);
+	}
+	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		System.out.println("repainting");

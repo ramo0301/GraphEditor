@@ -121,32 +121,68 @@ private class AddEdgeAction extends AbstractAction {
 			System.out.println("VerticalRatio: " + verticalRatio);
 			System.out.println((int)Math.round(xDifference*1/yDifference));
 			
+			int xFirst=0, yFirst=0, xSecond=0, ySecond=0;
+			
 			if(Math.abs(actualRatio)>=horizontalRatio){
 				
-				if(xDifference>0)
+				yFirst = (int)( thePanel.getRectangle(vertex1).getY() + thePanel.getRectangle(vertex1).getHeight()/2 );
+				ySecond = (int)( thePanel.getRectangle(vertex2).getY() + thePanel.getRectangle(vertex2).getHeight()/2 );
+				if(xDifference>0){
 					System.out.println("Left horizontal case");
-				else
+					xFirst = (int)thePanel.getRectangle(vertex1).getX();
+					xSecond = (int)( thePanel.getRectangle(vertex2).getX() + thePanel.getRectangle(vertex2).getWidth() );;
+				} else {
 					System.out.println("Right horizontal case");
+					xFirst = (int)( thePanel.getRectangle(vertex1).getX() + thePanel.getRectangle(vertex1).getWidth() );
+					xSecond = (int)thePanel.getRectangle(vertex2).getX();
+				}
 			} else if(Math.abs(actualRatio)<=verticalRatio){
-				
-				if(yDifference>0)
+				xFirst = (int)( thePanel.getRectangle(vertex1).getX() + thePanel.getRectangle(vertex1).getWidth()/2) ;
+				xSecond = (int)( thePanel.getRectangle(vertex2).getX() + thePanel.getRectangle(vertex2).getWidth()/2) ;
+				if(yDifference>0){
 					System.out.println("Upper vertical case");
-				else
+					yFirst = (int)( thePanel.getRectangle(vertex1).getY() );
+					ySecond = (int)( thePanel.getRectangle(vertex2).getY() + thePanel.getRectangle(vertex2).getHeight() );
+				} else {
 					System.out.println("Lower vertical case");
+					yFirst = (int)( thePanel.getRectangle(vertex1).getY() + thePanel.getRectangle(vertex1).getHeight() );
+					ySecond= (int)( thePanel.getRectangle(vertex2).getY() );
+				}
 			} else {
 				
+				//THIS PART CAN BE DONE MORE EFFICIENTLY
+				
 				if(xDifference>0){
-					if(yDifference>0)
+					
+					yFirst = (int)( thePanel.getRectangle(vertex1).getY() + thePanel.getRectangle(vertex1).getHeight() );
+					ySecond = (int)thePanel.getRectangle(vertex2).getY();
+					if(yDifference>0){
 						System.out.println("Lower right case");
-					else
+						xFirst = (int)( thePanel.getRectangle(vertex1).getX() + thePanel.getRectangle(vertex1).getWidth()*2/3 );
+					} else {
 						System.out.println("Lower left case");
+						xFirst = (int)( thePanel.getRectangle(vertex1).getX() + thePanel.getRectangle(vertex1).getWidth()/3 );
+						xSecond = (int)( thePanel.getRectangle(vertex2).getX() + thePanel.getRectangle(vertex2).getWidth()*2/3 );
+					}
 				} else {
-					if(yDifference>0)
+					
+					yFirst = (int)thePanel.getRectangle(vertex1).getY();
+					ySecond = (int)( thePanel.getRectangle(vertex2).getY() + thePanel.getRectangle(vertex2).getHeight() );
+					if(yDifference>0){
 						System.out.println("Upper right case");
-					else
+						xFirst = (int)( thePanel.getRectangle(vertex1).getX() + thePanel.getRectangle(vertex1).getWidth()*2/3 );
+						xSecond = (int)( thePanel.getRectangle(vertex2).getX() + thePanel.getRectangle(vertex2).getWidth()/3 );
+					} else {
 						System.out.println("Upper left case");
+						xFirst = (int)( thePanel.getRectangle(vertex1).getX() + thePanel.getRectangle(vertex1).getWidth()/3 );
+						xSecond= (int)( thePanel.getRectangle(vertex2).getX() + thePanel.getRectangle(vertex2).getWidth()*2/3 );
+					}
 				}
 			}
+			
+			thePanel.addLineCoordinates(xFirst, yFirst, xSecond, ySecond);
+			thePanel.repaint();
+			
 			
 			
 			

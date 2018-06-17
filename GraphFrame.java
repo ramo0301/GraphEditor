@@ -27,13 +27,14 @@ public class GraphFrame extends JFrame {
 	private int numberOfVertices = 0;
 	private GraphModel theModel = new GraphModel();
 	private ArrayList<Rectangle> rectangleList = new ArrayList<Rectangle>();
+	private GraphPanel thePanel = new GraphPanel();
 	
 	Scanner keyboard = new Scanner(System.in);
 	
 	public GraphFrame(){
 		super("Graph Frame");
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLayout(new BorderLayout() );
 				
 		JMenu theMenu = new JMenu("Menu");
@@ -47,13 +48,12 @@ public class GraphFrame extends JFrame {
 		Action addVertex = new AddVertexAction("add vertex");
 		addVertexItem.setAction(addVertex);
 		
-		GraphPanel center = new GraphPanel();
-		center.setBackground(Color.green);
+		thePanel.setBackground(Color.green);
 		add(new EmptyPanel(), BorderLayout.NORTH);
 		add(new EmptyPanel(), BorderLayout.SOUTH);
 		add(new EmptyPanel(), BorderLayout.EAST);
 		add(new EmptyPanel(), BorderLayout.WEST);
-		add(center, BorderLayout.CENTER);
+		add(thePanel, BorderLayout.CENTER);
 		
 	}
 	
@@ -67,14 +67,15 @@ public class GraphFrame extends JFrame {
 			setActionValue(true);				//probably doesn't even need to use the method
 			
 			//System.out.println("Enter coordinates x and y");
+			switch(numberOfVertices){
+			}
 			int xCoordinate = numberOfVertices*100;
 			int yCoordinate = numberOfVertices*100;
 			
 			theModel.addVertex("Vertex " + numberOfVertices, xCoordinate, yCoordinate);
-			rectangleList.add(theModel.getVertexList().get(numberOfVertices).getRectangle());
+			thePanel.addRectangle(theModel.getVertexList().get(numberOfVertices).getRectangle());
 			
-			System.out.println("Hereby setting action value to true");
-			repaint();
+			thePanel.repaint();
 			
 			numberOfVertices++;
 		}
@@ -94,13 +95,14 @@ public class GraphFrame extends JFrame {
 	public void setActionValue(boolean value){
 		//actionValue = value;
 	}
-	
+	/*
 	public void paint(Graphics g){
 		super.paint(g);
 		for(Rectangle rectangle : rectangleList){
-			//g.drawRect((int)rectangle.getX(), (int)rectangle.getY(), (int)rectangle.getWidth(), (int)rectangle.getHeight());
+			g.drawRect((int)rectangle.getX(), (int)rectangle.getY(), (int)rectangle.getWidth(), (int)rectangle.getHeight());
 		}
 		//if(actionValue)
 		//	g.drawRect(100, 100, 100, 50);
 	}
+	*/
 }

@@ -20,9 +20,13 @@ public class GraphPanel extends JPanel {
 	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
+		System.out.println("repainting");
 
 		for(Rectangle rec : listOfRectangles){
-			g.drawRect((int)rec.getX(), (int)rec.getY(), (int)rec.getWidth(), (int)rec.getHeight());			
+			g.setColor(Color.BLACK);
+			g.drawRect((int)rec.getX(), (int)rec.getY(), (int)rec.getWidth(), (int)rec.getHeight());	
+			g.setColor(Color.WHITE);
+			g.fillRect((int)rec.getX()+1, (int)rec.getY()+1, (int)rec.getWidth()-1, (int)rec.getHeight()-1);			
 		}
 	}
 	
